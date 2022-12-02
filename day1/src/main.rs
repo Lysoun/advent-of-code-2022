@@ -2,7 +2,7 @@ use std::cmp::max;
 use std::fs;
 
 fn main() {
-    let input_path = "src/day1/input.txt";
+    let input_path = "input.txt";
     let input = match fs::read_to_string(input_path) {
         Ok(file) => file,
         Err(error) => panic!("Problem opening the file: {:?}", error)
