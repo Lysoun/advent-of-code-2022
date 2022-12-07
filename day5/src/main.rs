@@ -33,12 +33,18 @@ fn main() {
             let number_to_move = line_split[1].parse::<u8>().unwrap_or_else(|_| panic!("Could not parse as int"));
             let from_stack = line_split[3].parse::<u8>().unwrap_or_else(|_| panic!("Could not parse as int"));
             let to_stack = line_split[5].parse::<u8>().unwrap_or_else(|_| panic!("Could not parse as int"));
-
+            let mut crates_to_move: Vec<char> = vec![];
             for _i in 0..number_to_move {
                 let crate_moved = stacks.get_mut(&from_stack).unwrap().pop();
-                crate_moved.map(|c| stacks.get_mut(&to_stack).unwrap().push(c));
+                crate_moved.map(|c| crates_to_move.push(c));
             }
-        } else {
+            crates_to_move.reverse();
+
+            for crate_to_move in crates_to_move {
+                stacks.get_mut(&to_stack).unwrap().push(crate_to_move);
+            }
+
+            } else {
             if line.len() == 0 {
                 for i in 1..(max_stack + 1) {
                     stacks.get_mut(&i).unwrap().reverse();
