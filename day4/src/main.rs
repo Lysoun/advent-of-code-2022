@@ -11,6 +11,13 @@ fn is_fully_included_in(assignment1: Assignment, assignment2: Assignment) -> boo
         assignment1.section_range_end <= assignment2.section_range_end;
 }
 
+fn is_partially_included_in(assignment1: Assignment, assignment2: Assignment) -> bool {
+    return assignment1.section_range_beginning >= assignment2.section_range_beginning &&
+        assignment1.section_range_beginning <= assignment2.section_range_end ||
+        assignment1.section_range_end >= assignment2.section_range_beginning &&
+            assignment1.section_range_end <= assignment2.section_range_end;
+}
+
 fn main() {
     let input_path = "input.txt";
     let input = match fs::read_to_string(input_path) {
@@ -35,8 +42,8 @@ fn main() {
             section_range_beginning: assignments[2],
             section_range_end: assignments[3]
         };
-        if is_fully_included_in(first_assignment, second_assignment) ||
-            is_fully_included_in(second_assignment, first_assignment) {
+        if is_partially_included_in(first_assignment, second_assignment) ||
+            is_partially_included_in(second_assignment, first_assignment) {
             answer += 1;
         }
     }
