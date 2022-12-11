@@ -60,10 +60,15 @@ fn compute_new_tail_position(head_position: (i16, i16), tail_position: (i16, i16
 fn main() {
     let input = safe_file_read("input.txt");
     let input_lines = input.lines();
-    let mut head_position: (i16, i16) = (0, 0);
-    let mut tail_position: (i16, i16) = (0, 0);
+    let knots_number: usize = 2;
+    let mut rope_knots_positions: Vec<(i16, i16)> = vec![];
+
+    for _i in 0..knots_number {
+        rope_knots_positions.push((0, 0));
+    }
+
     let mut visited_positions: HashSet<(i16, i16)> = HashSet::new();
-    visited_positions.insert(tail_position);
+    visited_positions.insert((0, 0));
 
     for line in input_lines {
         let line_split: Vec<&str> = line.split_whitespace().collect();
@@ -74,12 +79,14 @@ fn main() {
         };
 
         for _i in 0..steps_number {
-            head_position = compute_new_position(direction, head_position);
+            rope_knots_positions[0] = compute_new_position(direction, rope_knots_positions[0]);
 
-            if compute_distance(head_position, tail_position) > 1 {
-                tail_position = compute_new_tail_position(head_position, tail_position);
-                visited_positions.insert(tail_position);
+            for j in 1..knots_number {
+                if compute_distance(rope_knots_positions[j - 1], rope_knots_positions[j]) > 1 {
+                    rope_knots_positions[j] = compute_new_tail_position(rope_knots_positions[j - 1], rope_knots_positions[j]);
+                }
             }
+            visited_positions.insert(rope_knots_positions[knots_number - 1]);
         }
     }
 
