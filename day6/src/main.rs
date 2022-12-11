@@ -22,14 +22,15 @@ fn main() {
 
     let mut position: usize = 0;
     let mut found = false;
+    let marker_size = 14;
 
     while !found {
-        if !is_valid_marker(input.get(position..(position + 4)).unwrap()) {
+        if !is_valid_marker(input.get(position..(position + marker_size)).unwrap()) {
             position += 1;
         } else {
             found = true;
         }
     }
 
-    println!("Result: {}", position + 4);
+    println!("Result: {}", position + marker_size);
 }
