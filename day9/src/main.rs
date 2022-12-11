@@ -60,7 +60,7 @@ fn compute_new_tail_position(head_position: (i16, i16), tail_position: (i16, i16
 fn main() {
     let input = safe_file_read("input.txt");
     let input_lines = input.lines();
-    let knots_number: usize = 2;
+    let knots_number: usize = 10;
     let mut rope_knots_positions: Vec<(i16, i16)> = vec![];
 
     for _i in 0..knots_number {
